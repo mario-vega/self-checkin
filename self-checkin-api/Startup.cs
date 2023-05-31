@@ -7,6 +7,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using self_checkin_api.Contracts;
+using self_checkin_api.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,7 +28,10 @@ namespace self_checkin_api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddSingleton<DapperContext>();
+            services.AddScoped<ICustomerRepository, CustomerRepository>();
+            services.AddScoped<ISiteRepository, SiteRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
